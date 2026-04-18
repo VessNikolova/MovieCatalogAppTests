@@ -17,7 +17,7 @@ namespace MovieCatalogTests
 
         private const string BaseUrl = "http://144.91.123.158:5000";
 
-
+        //User Credentials:
         private const string LoginEmail = "ves123@abv.bg";
 
 
@@ -220,6 +220,19 @@ namespace MovieCatalogTests
 
             Assert.That(readyResponse.Msg, Is.EqualTo("Unable to delete the movie! Check the movieId parameter or user verification!"));
 
+        }
+        [Order(8)]
+        [Test]
+        public void GetDeletedMovieById_ShouldReturnBadRequest()
+        {
+            var request = new RestRequest("/api/Movie/Details", Method.Get);
+            request.AddQueryParameter("movieId", lastCreatedMovieId);
+
+            var response = this.client.Execute(request);
+            
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            
         }
 
         [OneTimeTearDown]
